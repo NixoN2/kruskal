@@ -49,15 +49,15 @@ def show_figure(data):
 
 def test_kruskal(n):
     # Тестируем алгоритм Краскала
-    sizes = [512*n + 16*i*n for i in range(17)]
+    sizes = [64*n + 16*i*n for i in range(17)]
     i = 0
     tests = []
     for k in range(len(sizes)):
         tests.append({'size': sizes[k], 'equal': False})
     for size in sizes:
         time = 0
-        # Генерируем произвоольный граф
-        g = random_weighted_graph(size,1,10000)
+        # Генерируем произвольный граф
+        g = weighted_complete_graph(size,1,10000)
         # Считаем минимальное остовное дерево с помощью
         # функции из библиотеки
         T = nx.minimum_spanning_tree(g)
@@ -77,10 +77,10 @@ def test_kruskal(n):
         i += 1
     return tests
 
-def random_weighted_graph(n, lower_weight, upper_weight):
+def weighted_complete_graph(n, lower_weight, upper_weight):
     # Генерируем граф из n вершин с произвольными весами
     import random
-    g = nx.gnp_random_graph(n,2*math.log(n)/n)
+    g = nx.complete_graph(n)
     m = len(list(g.edges))
     weights = [random.randint(lower_weight, upper_weight) for r in range(m)]
     i = 0
